@@ -8,13 +8,13 @@ namespace Core
 {
     public class Communicator
     {
+        
         public string Send(string message)
         {
-            ConnectionFactory factory = new ConnectionFactory() { HostName = "localhost" };
-            using IConnection connection = factory.CreateConnection();
-            using IModel channel = connection.CreateModel();
-            channel.QueueDeclare(
-                queue: "hello",
+            IConnection connection = Connect();
+            IModel channel = connection.CreateModel();
+            _ = channel.QueueDeclare(
+                queue: "Default",
                 durable: false,
                 exclusive: false,
                 autoDelete: false,
@@ -23,10 +23,10 @@ namespace Core
             byte[] body = Encoding.UTF8.GetBytes(message);
 
             channel.BasicPublish(
-              exchange: "",
-              routingKey: "hello",
-              basicProperties: null,
-              body: body);
+                exchange: "",
+                routingKey: "hello",
+                basicProperties: null,
+                body: body);
             Console.WriteLine(" [x] Sent {0}", message);
             return message;
         }
@@ -35,7 +35,7 @@ namespace Core
         {
             using IConnection connection = new ConnectionFactory() { HostName = "localhost" }.CreateConnection();
             using IModel channel = connection.CreateModel();
-            channel.QueueDeclare(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
+            _ = channel.QueueDeclare(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
 
             List<string> messages = new List<string>();
 
