@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Configuration;
-using System.Globalization;
-using System.ComponentModel;
-using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+
 namespace Core
 {
     public sealed class Configuration
