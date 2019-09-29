@@ -1,10 +1,10 @@
-﻿namespace Core
+﻿namespace Core.ApplicationRegistry
 {
-    class RegisterClient
+    class Client
     {
         private void SetupApplication()
         {
-            
+
         }
     }
 }
