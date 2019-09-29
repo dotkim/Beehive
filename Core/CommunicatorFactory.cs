@@ -6,7 +6,6 @@ namespace Core
     {
         public ConnectionFactory ConnectionConfiguration()
         {
-            Configuration config = GetConfiguration();
             ConnectionFactory factory = new ConnectionFactory
             {
                 UserName = config.RmqUserName,
