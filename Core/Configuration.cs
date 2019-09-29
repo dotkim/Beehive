@@ -2,7 +2,7 @@
 
 namespace Core
 {
-    public sealed class Configuration
+    public class Configuration
     {
         public string RmqUri { get; set; } = "localhost";
         public int RmqPort { get; set; } = 5672;

@@ -4,7 +4,7 @@ namespace Core
 {
     class CommunicatorFactory
     {
-        public ConnectionFactory ConnectionConfiguration()
+        private ConnectionFactory ConnectionConfiguration()
         {
             ConnectionFactory factory = new ConnectionFactory
             {
