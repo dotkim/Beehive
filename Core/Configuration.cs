@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Configuration;
+using System.Globalization;
+using System.ComponentModel;
+using System.Collections.Specialized;
 namespace Core
 {
-    class Configuration
+    public sealed class Configuration
     {
         public string RmqUri { get; set; } = "localhost";
         public int RmqPort { get; set; } = 5672;

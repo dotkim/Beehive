@@ -6,7 +6,7 @@ namespace Core
     {
         public ConnectionFactory ConnectionConfiguration()
         {
-            Configuration config = Configuration();
+            Configuration config = GetConfiguration();
             ConnectionFactory factory = new ConnectionFactory
             {
                 UserName = config.RmqUserName,
@@ -14,7 +14,7 @@ namespace Core
                 HostName = config.RmqUri,
                 Port = config.RmqPort
             };
-            return factory
+            return factory;
         }
 
         public IConnection Connect()
