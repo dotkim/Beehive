@@ -9,12 +9,10 @@ namespace Program
     {
         static void Main(string[] args)
         {
-            _ = new InitializeApplication();
+            new InitializeApplication();
             Communicator com = new Communicator();
 
-            com.Send("testmelding :)");
-            Console.WriteLine("sender test");
-            Console.ReadLine();
+            _ = com.Send("testmelding :)");
         }
     }
 }

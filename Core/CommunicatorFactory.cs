@@ -4,17 +4,17 @@ namespace Core
 {
     public class CommunicatorFactory
     {
-        private Configuration config { get; set; }
-        private readonly IConfiguration configuration;
+        private Configuration Config { get; set; }
+
         private ConnectionFactory ConnectionConfiguration()
         {
-            config = configuration.GetConfiguration();
+            Config = InitializeApplication.GetConfiguration();
             ConnectionFactory factory = new ConnectionFactory
             {
-                UserName = config.RmqUserName,
-                Password = config.RmqPassword,
-                HostName = config.RmqUri,
-                Port = config.RmqPort
+                UserName = Config.RmqUserName,
+                Password = Config.RmqPassword,
+                HostName = Config.RmqUri,
+                Port = Config.RmqPort
             };
             return factory;
         }

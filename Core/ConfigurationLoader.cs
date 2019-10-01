@@ -20,8 +20,6 @@ namespace Core
 
         public Configuration LoadConfig()
         {
-            config = new Configuration();
-
             try
             {
                 if (!File.Exists(cfgPath))
@@ -36,7 +34,7 @@ namespace Core
 
                 return config;
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 throw;
             }

@@ -1,11 +1,11 @@
 ﻿namespace Core
 {
-    public class InitializeApplication : IConfiguration
+    public class InitializeApplication
     {
         private ConfigurationLoader configLoader;
-        private Configuration config;
+        private static Configuration config;
 
-        public Configuration GetConfiguration()
+        public static Configuration GetConfiguration()
         {
             return config;
         }
