@@ -8,29 +8,19 @@ namespace Core
 {
     public class Communicator
     {
-        private Configuration Config { get; set; }
+        private CommunicatorFactory factory { get; set; }
+
+        public Communicator()
+        {
+            factory = new CommunicatorFactory();
+        }
 
         public string Send(string message)
         {
-            Config = InitializeApplication.GetConfiguration();
-
-            CommunicatorFactory factory = new CommunicatorFactory();
-            IConnection connection = factory.Connect();
-            IModel channel = connection.CreateModel();
-            _ = channel.QueueDeclare(
-                queue: Config.ApplicationName,
-                durable: false,
-                exclusive: false,
-                autoDelete: false,
-                arguments: null);
-
             byte[] body = Encoding.UTF8.GetBytes(message);
 
-            channel.BasicPublish(
-                exchange: "amq.direct",
-                routingKey: "",
-                basicProperties: null,
-                body: body);
+            factory.Publish("amq.direct", "registry", body);
+
             Console.WriteLine(" [x] Sent {0}", message);
             return message;
         }
