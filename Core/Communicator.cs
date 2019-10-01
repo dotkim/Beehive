@@ -8,10 +8,10 @@ namespace Core
 {
     public class Communicator
     {
-        
         public string Send(string message)
         {
-            IConnection connection = Connect();
+            CommunicatorFactory factory = new CommunicatorFactory();
+            IConnection connection = factory.Connect();
             IModel channel = connection.CreateModel();
             _ = channel.QueueDeclare(
                 queue: "Default",

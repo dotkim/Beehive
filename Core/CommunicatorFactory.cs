@@ -2,10 +2,13 @@
 
 namespace Core
 {
-    class CommunicatorFactory
+    public class CommunicatorFactory
     {
+        private Configuration config { get; set; }
+        private readonly IConfiguration configuration;
         private ConnectionFactory ConnectionConfiguration()
         {
+            config = configuration.GetConfiguration();
             ConnectionFactory factory = new ConnectionFactory
             {
                 UserName = config.RmqUserName,

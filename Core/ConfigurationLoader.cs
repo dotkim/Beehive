@@ -12,6 +12,7 @@ namespace Core
         private Configuration config;
         private string cfgPath;
 
+        public ConfigurationLoader() : this(defaultConfigPath) { }
         public ConfigurationLoader(string cfgPath)
         {
             this.cfgPath = cfgPath;
@@ -31,14 +32,19 @@ namespace Core
 
                 string cfgContent = File.ReadAllText(cfgPath);
 
-                JsonValue parsedCfg = JsonValue.Parse(cfgContent);
-                
+                config = Deserialize(cfgContent);
 
+                return config;
             }
             catch (System.Exception)
             {
                 throw;
             }
+        }
+
+        private Configuration Deserialize(string cfgContent)
+        {
+            return JsonSerializer.Deserialize<Configuration>(cfgContent);
         }
     }
 }
