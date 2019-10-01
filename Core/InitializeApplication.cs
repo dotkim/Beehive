@@ -2,19 +2,19 @@
 {
     public class InitializeApplication
     {
-        private ConfigurationLoader configLoader;
-        private static Configuration config;
+        private ConfigurationLoader ConfigLoader;
+        private static Configuration Config;
 
         public static Configuration GetConfiguration()
         {
-            return config;
+            return Config;
         }
 
         public InitializeApplication()
         {
             string path = @"C:\Github\Sauron\Program\Core.json";
-            configLoader = new ConfigurationLoader(path);
-            config = configLoader.LoadConfig();
+            ConfigLoader = new ConfigurationLoader(path);
+            Config = ConfigLoader.LoadConfig();
         }
     }
 }
