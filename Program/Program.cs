@@ -13,6 +13,7 @@ namespace Program
             Communicator com = new Communicator();
 
             _ = com.Send("testmelding :)");
+            Environment.Exit(100); // done :)
         }
     }
 }
