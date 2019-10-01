@@ -9,5 +9,10 @@
         {
             return config;
         }
+
+        public InitializeApplication()
+        {
+
+        }
     }
 }

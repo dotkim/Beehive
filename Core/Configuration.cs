@@ -12,7 +12,7 @@ namespace Core
 
         public string ApplicationName { get; set; } = "DefaultApplication";
 
-        public List<string> SubscribedFields { get; set; }
-        public List<string> SubscribedExchanges { get; set; }
+        public List<string> SubscribedFields { get; set; } = new List<string>();
+        public List<string> SubscribedExchanges { get; set; } = new List<string>();
     }
 }
