@@ -12,7 +12,9 @@ namespace Program
             new InitializeApplication();
             Communicator com = new Communicator();
 
-            _ = com.Send("testmelding :)");
+            com.Send("testmelding :)");
+            com.Receiver();
+
             Environment.Exit(100); // done :)
         }
     }
