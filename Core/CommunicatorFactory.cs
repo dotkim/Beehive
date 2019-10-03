@@ -7,12 +7,17 @@ namespace Core
     {
         private Configuration Config { get; set; }
         private IConnection Connection { get; set; }
-        private IModel Channel { get; set; }
+        private static IModel Channel { get; set; }
 
         public CommunicatorFactory()
         {
             Connection = Connect();
             Channel = CreateModel();
+        }
+
+        public static IModel GetChannel()
+        {
+            return Channel;
         }
 
         private ConnectionFactory ConnectionConfiguration()
@@ -65,6 +70,11 @@ namespace Core
                 routingKey: key,
                 body: body,
                 basicProperties: prop);
+        }
+
+        public void Consume(IBasicConsumer consmr, bool ack = true, string que = "Default")
+        {
+            Channel.BasicConsume(queue: que, autoAck: ack, consumer: consmr);
         }
     }
 }
