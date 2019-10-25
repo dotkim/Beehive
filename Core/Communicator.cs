@@ -5,18 +5,19 @@ namespace Core
 {
     public class Communicator
     {
-        private CommunicatorFactory factory { get; set; }
+        private CommunicatorFactory Factory { get; set; }
 
         public Communicator()
         {
-            factory = new CommunicatorFactory();
+            new InitializeApplication();
+            Factory = new CommunicatorFactory();
         }
 
         public void Send(string message)
         {
             byte[] body = Encoding.UTF8.GetBytes(message);
 
-            factory.Publish("amq.direct", "", body);
+            Factory.Publish("amq.direct", "", body);
 
             Console.WriteLine(" [x] Sent {0}", message);
         }
@@ -32,7 +33,7 @@ namespace Core
                 Console.WriteLine(" [x] Received {0}", message);
             };
 
-            factory.Consume(consumer);
+            Factory.Consume(consumer);
         }
     }
 }

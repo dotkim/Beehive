@@ -1,21 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Core;
 
 
 namespace Program
 {
+    public class ExThread
+    {
+        private Communicator com = new Communicator();
+
+        // Non-static method 
+        public void mythread1()
+        {
+            while (true)
+            {
+                Thread.Sleep(10000);
+                com.Send("testmelding :)");
+            }
+        }
+
+        public void mythread2()
+        {
+            com.Receiver();
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
-            new InitializeApplication();
-            Communicator com = new Communicator();
-
-            com.Send("testmelding :)");
-            com.Receiver();
-
-            Environment.Exit(100); // done :)
+            ExThread obj = new ExThread();
+            Thread thr = new Thread(obj.mythread1);
+            Thread thr2 = new Thread(obj.mythread2);
+            thr.Start();
+            thr2.Start();
         }
     }
 }
