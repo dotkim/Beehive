@@ -1,0 +1,10 @@
+﻿{
+	"RmqUri": "localhost",
+	"RmqPort": 5672,
+	"RmqUserName": "guest",
+	"RmqPassword": "guest",
+	"RmqQueue": "Default",
+	"ApplicationName": "DefaultApplication",
+	"SubscribedFields": [],
+	"SubscribedExchanges": []
+}
