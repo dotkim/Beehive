@@ -6,21 +6,21 @@ namespace Registry
 {
     public class ExThread
     {
-        private Communicator com = new Communicator();
+        private readonly Communicator Comm = new Communicator();
 
         // Non-static method
         public void SenderThread(string message)
         {
             while (true)
             {
-                com.Send(message);
+                Comm.Send(message);
                 Thread.Sleep(2000);
             }
         }
 
         public void ReceiverThread()
         {
-            com.Receiver();
+            Comm.Receiver();
         }
     }
 
