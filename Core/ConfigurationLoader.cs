@@ -1,15 +1,14 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using System.Text.Json;
 
 namespace Core
 {
     internal class ConfigurationLoader
     {
-        static private string defaultConfigPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Core.json";
+        static private string defaultConfigPath = Directory.GetCurrentDirectory() + "\\Core.json";
 
-        private Configuration config;
+        private Configuration config = new Configuration();
         private string cfgPath;
 
         public ConfigurationLoader() : this(defaultConfigPath) { }
@@ -24,8 +23,7 @@ namespace Core
             {
                 if (!File.Exists(cfgPath))
                 {
-                    Console.WriteLine("File not found.");
-                    Environment.Exit(2);
+                    return config;
                 }
 
                 string cfgContent = File.ReadAllText(cfgPath);

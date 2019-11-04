@@ -10,10 +10,12 @@
             return Config;
         }
 
-        public InitializeApplication()
+        public InitializeApplication(string path = null)
         {
-            string path = @"C:\Github\Sauron\Program\Core.json";
-            ConfigLoader = new ConfigurationLoader(path);
+            _ = path != null
+            ? ConfigLoader = new ConfigurationLoader(path)
+            : ConfigLoader = new ConfigurationLoader();
+
             Config = ConfigLoader.LoadConfig();
         }
     }
