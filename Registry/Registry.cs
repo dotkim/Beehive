@@ -8,17 +8,17 @@ namespace Registry
     {
         private Communicator com = new Communicator();
 
-        // Non-static method 
-        public void mythread1()
+        // Non-static method
+        public void SenderThread(string message)
         {
             while (true)
             {
-                Thread.Sleep(10000);
-                com.Send("testmelding :)");
+                com.Send(message);
+                Thread.Sleep(2000);
             }
         }
 
-        public void mythread2()
+        public void ReceiverThread()
         {
             com.Receiver();
         }
@@ -28,9 +28,22 @@ namespace Registry
     {
         static void Main(string[] args)
         {
+            string message;
+
+            if (args.Length > 0)
+            {
+                message = args[0];
+            }
+            else
+            {
+                message = "Testmelding";
+            }
+
             ExThread obj = new ExThread();
-            Thread thr = new Thread(obj.mythread1);
-            Thread thr2 = new Thread(obj.mythread2);
+
+            Thread thr = new Thread(() => obj.SenderThread(message));
+            Thread thr2 = new Thread(obj.ReceiverThread);
+
             thr.Start();
             thr2.Start();
         }
