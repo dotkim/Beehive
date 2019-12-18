@@ -3,16 +3,29 @@ using System.Text;
 
 namespace Core
 {
+    /// <summary>
+    /// The rabbitmq communicator class.
+    /// contains methods for communicating with rabbitmq. Uses the CommunicatorConsumer and CommunicatorFactory classes.
+    /// </summary>
     public class Communicator
     {
-        private CommunicatorFactory Factory { get; set; }
+        /// <value>Gets the instance of the CommunicatorFactory class.</value>
+        private CommunicatorFactory Factory { get; }
 
+        /// <summary>
+        /// Creates a new instance of the Communicator class, takes no parameters.
+        /// </summary>
+        /// <example>var communicator = new Communicator();</example>
         public Communicator()
         {
             new InitializeApplication();
             Factory = new CommunicatorFactory();
         }
 
+        /// <summary>
+        /// Sends a new message to the applications queue.
+        /// </summary>
+        /// <param name="message">The string message to send, should be JSON to be parsed unless using a different parser.</param>
         public void Send(string message)
         {
             byte[] body = Encoding.UTF8.GetBytes(message);
@@ -22,6 +35,10 @@ namespace Core
             Console.WriteLine(" [x] Sent {0}", message);
         }
 
+        /// <summary>
+        /// The rabbitmq queue listener.
+        /// This method listens for new messages from the subscribed queue.
+        /// </summary>
         public void Receiver()
         {
             RabbitMQ.Client.Events.EventingBasicConsumer consumer = CommunicatorConsumer.CreateConsumer();
