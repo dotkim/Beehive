@@ -26,7 +26,7 @@ namespace Core
         /// <value>Application name, should always be set.</value>
         public string ApplicationName { get; set; } = "DefaultApplication";
 
-        public List<string> SubscribedFields { get; set; } = new List<string>();
-        public List<string> SubscribedExchanges { get; set; } = new List<string>();
+        /// <value>A dictionary of subscribed exchanges and fields, this should be all routing keys provided by the registry</value>
+        public Dictionary<string, string> RoutingKeys { get; set; } = new Dictionary<string, string>();
     }
 }

@@ -5,6 +5,5 @@
 	"RmqPassword": "guest",
 	"RmqQueue": "Default",
 	"ApplicationName": "DefaultApplication",
-	"SubscribedFields": [],
-	"SubscribedExchanges": []
+	"RoutingKeys": {}
 }
