@@ -39,7 +39,7 @@ namespace Core
         /// The rabbitmq queue listener.
         /// This method listens for new messages from the subscribed queue.
         /// </summary>
-        public void Receiver()
+        public void Receiver(Action<string> callback)
         {
             RabbitMQ.Client.Events.EventingBasicConsumer consumer = CommunicatorConsumer.CreateConsumer();
 
@@ -48,6 +48,7 @@ namespace Core
                 byte[] body = ea.Body;
                 string message = Encoding.UTF8.GetString(body);
                 Console.WriteLine(" [x] Received {0}", message);
+                callback.Invoke(message);
             };
 
             Factory.Consume(consumer);

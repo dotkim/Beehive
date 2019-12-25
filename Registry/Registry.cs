@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
+using System.Collections.Generic;
 using Core;
 
 
@@ -18,14 +20,22 @@ namespace Registry
             }
         }
 
-        public void ReceiverThread()
+        public void ReceiverThread(Action<string> cb)
         {
-            Comm.Receiver();
+            Comm.Receiver(cb);
         }
     }
 
     class Registry
     {
+        private static Queue<string> MainTask = new Queue<string>();
+
+        private static void AddToMainTask(string task)
+        {
+            MainTask.Enqueue(task);
+            Console.WriteLine("New task was queued, new count is: " + MainTask.Count.ToString());
+        }
+
         static void Main(string[] args)
         {
             string message;
@@ -41,11 +51,13 @@ namespace Registry
 
             ExThread obj = new ExThread();
 
-            Thread thr = new Thread(() => obj.SenderThread(message));
-            Thread thr2 = new Thread(obj.ReceiverThread);
+            Thread sender = new Thread(() => obj.SenderThread(message));
+            sender.Name = "Sender";
+            Thread receiver = new Thread(() => obj.ReceiverThread(AddToMainTask));
+            receiver.Name = "Receiver";
 
-            thr.Start();
-            thr2.Start();
+            sender.Start();
+            receiver.Start();
         }
     }
 }
