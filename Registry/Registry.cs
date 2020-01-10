@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Text.Json;
 using System.Collections.Generic;
 using Core;
 
@@ -24,6 +25,47 @@ namespace Registry
         {
             Comm.Receiver(cb);
         }
+
+        public void WorkerThread(Queue<string> MainTask)
+        {
+            while (true)
+            {
+                bool exists = MainTask.TryDequeue(out string task);
+                if (exists)
+                {
+                    Message parsedtask = Json.Deserialize(task);
+                    Console.WriteLine(parsedtask.Action);
+                    Console.WriteLine(parsedtask.Content.ApplicationName);
+                    Console.WriteLine(parsedtask.Content.Queue);
+
+                    foreach (string field in parsedtask.Content.RoutingKeys["User"])
+                    {
+                        Console.WriteLine(field);
+                    }
+                }
+            }
+        }
+    }
+
+    public class MessageContent
+    {
+        public Dictionary<string, List<string>> RoutingKeys { get; set; }
+        public string Queue { get; set; }
+        public string ApplicationName { get; set; }
+    }
+
+    public class Message
+    {
+        public string Action { get; set; }
+        public MessageContent Content { get; set; }
+    }
+
+    public static class Json
+    {
+        public static Message Deserialize(string json)
+        {
+            return JsonSerializer.Deserialize<Message>(json);
+        }
     }
 
     class Registry
@@ -46,7 +88,7 @@ namespace Registry
             }
             else
             {
-                message = "Testmelding";
+                message = "{\"Action\": \"newapp\",\"Content\":{\"RoutingKeys\":{\"User\": [\"FirstName\", \"LastName\", \"Phone\"]},\"ApplicationName\": \"testapp\",\"Queue\": \"testapp\"}}";
             }
 
             ExThread obj = new ExThread();
@@ -55,9 +97,12 @@ namespace Registry
             sender.Name = "Sender";
             Thread receiver = new Thread(() => obj.ReceiverThread(AddToMainTask));
             receiver.Name = "Receiver";
+            Thread worker = new Thread(() => obj.WorkerThread(MainTask));
+            worker.Name = "worker";
 
             sender.Start();
             receiver.Start();
+            worker.Start();
         }
     }
 }
