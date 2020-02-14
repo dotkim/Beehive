@@ -12,8 +12,9 @@ namespace Registry
         private readonly Communicator Comm = new Communicator();
 
         // Non-static method
-        public void SenderThread(string message)
+        public void SenderThread(Queue<string> SenderTask)
         {
+            string message = "{\"Action\": \"newapp\",\"Content\":{\"RoutingKeys\":{\"User\": [\"FirstName\", \"LastName\", \"Phone\"]},\"ApplicationName\": \"testapp\",\"Queue\": \"testapp\"}}";
             while (true)
             {
                 Comm.Send(message);
@@ -26,7 +27,7 @@ namespace Registry
             Comm.Receiver(cb);
         }
 
-        public void WorkerThread(Queue<string> MainTask)
+        public void WorkerThread(Queue<string> MainTask, Queue<string> SenderTask)
         {
             while (true)
             {
@@ -71,6 +72,7 @@ namespace Registry
     class Registry
     {
         private static Queue<string> MainTask = new Queue<string>();
+        private static Queue<string> SenderTask = new Queue<string>();
 
         private static void AddToMainTask(string task)
         {
@@ -78,26 +80,15 @@ namespace Registry
             Console.WriteLine("New task was queued, new count is: " + MainTask.Count.ToString());
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
-            string message;
-
-            if (args.Length > 0)
-            {
-                message = args[0];
-            }
-            else
-            {
-                message = "{\"Action\": \"newapp\",\"Content\":{\"RoutingKeys\":{\"User\": [\"FirstName\", \"LastName\", \"Phone\"]},\"ApplicationName\": \"testapp\",\"Queue\": \"testapp\"}}";
-            }
-
             ExThread obj = new ExThread();
 
-            Thread sender = new Thread(() => obj.SenderThread(message));
+            Thread sender = new Thread(() => obj.SenderThread(SenderTask));
             sender.Name = "Sender";
             Thread receiver = new Thread(() => obj.ReceiverThread(AddToMainTask));
             receiver.Name = "Receiver";
-            Thread worker = new Thread(() => obj.WorkerThread(MainTask));
+            Thread worker = new Thread(() => obj.WorkerThread(MainTask, SenderTask));
             worker.Name = "worker";
 
             sender.Start();
