@@ -41,7 +41,7 @@ namespace Core
         /// </summary>
         public void Receiver(Action<string> callback)
         {
-            RabbitMQ.Client.Events.EventingBasicConsumer consumer = CommunicatorConsumer.CreateConsumer();
+            var consumer = CommunicatorConsumer.CreateConsumer();
 
             consumer.Received += (model, ea) =>
             {
@@ -51,7 +51,7 @@ namespace Core
                 callback.Invoke(message);
             };
 
-            Factory.Consume(consumer);
+            Factory.Consume(consumer, "Registry");
         }
     }
 }

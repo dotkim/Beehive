@@ -130,7 +130,7 @@ namespace Core
         /// <param name="consmr">Consumer for capturing the event.</param>
         /// <param name="ack">Set to false if the message shouldn't be acked (Optional)</param>
         /// <param name="que">The queue to consume messages from.(Optional)</param>
-        public void Consume(IBasicConsumer consmr, bool ack = true, string que = "Default")
+        public void Consume(IBasicConsumer consmr, string que = "Default", bool ack = true)
         {
             Channel.BasicConsume(queue: que, autoAck: ack, consumer: consmr);
         }
