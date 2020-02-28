@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 using System.Text.Json;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Core;
 
 
@@ -14,7 +16,7 @@ namespace Registry
         // Non-static method
         public void SenderThread(Queue<string> SenderTask)
         {
-            string message = "{\"Action\": \"newapp\",\"Content\":{\"RoutingKeys\":{\"User\": [\"FirstName\", \"LastName\", \"Phone\"]},\"ApplicationName\": \"testapp\",\"Queue\": \"testapp\"}}";
+            string message = File.ReadAllText(@"C:\Github\Sauron\Registry\testapp.json");
             while (true)
             {
                 Comm.Send(message);
@@ -32,17 +34,14 @@ namespace Registry
             while (true)
             {
                 bool exists = MainTask.TryDequeue(out string task);
-                if (exists)
-                {
-                    Message parsedtask = Json.Deserialize(task);
-                    Console.WriteLine(parsedtask.Action);
-                    Console.WriteLine(parsedtask.Content.ApplicationName);
-                    Console.WriteLine(parsedtask.Content.Queue);
+                if (!exists) { continue; }
 
-                    foreach (string field in parsedtask.Content.RoutingKeys["User"])
-                    {
-                        Console.WriteLine(field);
-                    }
+                Message parsedtask;
+                parsedtask = Json.Deserialize(task);
+
+                if (parsedtask.Action == "NewApp")
+                {
+                    //check db
                 }
             }
         }

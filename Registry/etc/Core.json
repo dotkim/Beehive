@@ -3,7 +3,7 @@
 	"RmqPort": 5672,
 	"RmqUserName": "guest",
 	"RmqPassword": "guest",
-	"RmqQueue": "Default",
-	"ApplicationName": "DefaultApplication",
+	"RmqQueue": "Registry",
+	"ApplicationName": "Beehive Registry",
 	"RoutingKeys": {}
 }

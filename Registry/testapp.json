@@ -1,0 +1,14 @@
+﻿{
+	"Action": "NewApp",
+	"Content": {
+		"ApplicationName": "TestApp",
+		"Queue": "Registry",
+		"RoutingKeys": {
+			"User": [
+				"FirstName",
+				"LastName",
+				"Email"
+			]
+		}
+	}
+}
