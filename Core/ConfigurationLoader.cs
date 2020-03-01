@@ -6,7 +6,7 @@ namespace Core
 {
     internal class ConfigurationLoader
     {
-        static private string defaultConfigPath = Directory.GetCurrentDirectory() + "\\Core.json";
+        static private string defaultConfigPath = Directory.GetCurrentDirectory() + @"\etc\Core.json";
 
         private Configuration config = new Configuration();
         private string cfgPath;

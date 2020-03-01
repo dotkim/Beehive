@@ -90,7 +90,7 @@ namespace Core
         /// <param name="args"></param>
         public void DeclareQueue(
             string que,
-            bool dur = false,
+            bool dur = true,
             bool excl = false,
             bool del = false,
             IDictionary<string, object> args = null)
