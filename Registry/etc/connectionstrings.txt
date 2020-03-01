@@ -1,0 +1,1 @@
+﻿Server=localhost;Database=BeehiveRegistry;User Id=srv_beehivereg;Password=Password1;
